@@ -1,5 +1,5 @@
 *.py[cod]
-
+*~*
 # C extensions
 *.so
 
@@ -11,6 +11,8 @@ build
 eggs
 parts
 bin
+include
+local
 var
 sdist
 develop-eggs
