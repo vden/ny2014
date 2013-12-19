@@ -5,6 +5,7 @@ New Year congratulations server
 
 Deployment
 
+```
 git clone https://github.com/vden/ny2014 ny2014
 cd ny2014
 
@@ -21,3 +22,4 @@ sudo edit /etc/nginx/sites-enabled/ny2014-server.conf
 
 # (optional) add uwsgi startup file to supervisor
 # cp etc/ny2014.conf /etc/supervisor/conf.d/
+```
