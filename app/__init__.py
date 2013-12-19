@@ -26,19 +26,19 @@ def show_index():
 def get_next_message(client_id):
     bottle.response.content_type = "text/plain"
     next_mid = users.next_message_id(client_id)
-    return bottle.template("message", messages=(message_store.filter_id(next_mid), ))
+    return message_store.filter_id(next_mid)
 
 
 @app.get('/messages/random')
 def get_random_message():
     bottle.response.content_type = "text/plain"
-    return bottle.template("message", messages=(message_store.random(), ))
+    return message_store.random()
 
 
 @app.get('/messages/<message_id:int>')
 def get_message(message_id):
     bottle.response.content_type = "text/plain"
-    return bottle.template("message", messages=(message_store.filter_id(message_id), ))
+    return message_store.filter_id(message_id)
 
 
 @app.get('/messages')

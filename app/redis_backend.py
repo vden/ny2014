@@ -13,7 +13,7 @@ class RedisMessageBackend(object):
         return self.conn.lrange("messages", 0, -1)
 
     def add_message(self, text):
-        self.conn.lpush("messages", text)
+        self.conn.rpush("messages", text)
 
     def random(self):
         llen = self.conn.llen("messages")
@@ -29,8 +29,8 @@ class RedisUserBackend(object):
         llen = self.conn.llen("messages")
 
         if mid >= llen:
-            mid = 0
-            self.conn.hset("clients", client_id, 0)
+            mid = llen - 1
+            self.conn.hset("clients", client_id, mid)
 
         return mid
 
