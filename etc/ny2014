@@ -1,0 +1,16 @@
+server {
+    listen   80;
+    server_name  ny2014.local;
+
+    access_log  /var/log/nginx/ny2014.access.log;
+
+    location /static {              
+          root /var/www/env/ny2014-service/static;
+    }
+
+    location / {
+          root   /var/www/env/ny2014-service;
+          uwsgi_pass   127.0.0.1:3031;
+          include        uwsgi_params;
+    }
+}
