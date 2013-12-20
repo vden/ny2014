@@ -53,17 +53,17 @@ def post_message():
         text = validate_message(bottle.request.forms.text)
     except ValidationLengthException:
         bottle.response.status = 400
-        return "Message must be shorter than 80 characters"
+        return "Message must be shorter than 80 characters\n"
     except ValidationContentException:
         bottle.response.status = 400
-        return "Message contains invalid characters"
+        return "Message contains invalid characters\n"
 
     if not users.authorized(bottle.request.remote_addr):
         bottle.response.status = 400
-        return "You're allowed to send only one message per 5 minutes"
+        return "You're allowed to send only one message per 1 minute\n"
 
     message_store.add_message(text)
-    return "ok"
+    return "ok\n"
 
 
 application = StripPathMiddleware(app)

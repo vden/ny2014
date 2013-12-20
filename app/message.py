@@ -43,7 +43,7 @@ class MessageStore(object):
         return self.backend.get_all()
 
 
-matcher = re.compile(ur'[a-zA-Z0-9-!$%^&*()_+\ |~=`{}\[\]:";\'<>?,.\/]', re.U|re.I|re.M)
+matcher = re.compile(ur'[a-zA-Z0-9-!\033\r\n$%^&*()_+\ |~=`{}\[\]:";\'<>?,.\/]', re.U|re.I|re.M)
 def validate_message(text):
     if len(text) > 80:
         raise ValidationLengthException()

@@ -39,5 +39,5 @@ class RedisUserBackend(object):
         if lock:
             return False
         else:
-            self.conn.set("lock:%s" % ip, 1, ex=300)
+            self.conn.set("lock:%s" % ip, 1, ex=60)
             return True
