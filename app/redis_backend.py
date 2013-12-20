@@ -32,10 +32,12 @@ class RedisUserBackend(object):
 
         if mid < llen - BUFSIZE:
             mid = llen - BUFSIZE
+            if mid < 0: mid = 0
             self.conn.hset("clients", client_id, mid)
 
         elif mid >= llen:
             mid = llen - BUFSIZE
+            if mid < 0: mid = 0
             self.conn.hset("clients", client_id, mid)
 
         return mid
