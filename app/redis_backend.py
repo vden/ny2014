@@ -25,11 +25,17 @@ class RedisUserBackend(object):
         self.conn = redis.StrictRedis(host='localhost', db=6)
 
     def next_message_id(self, client_id):
-        mid = self.conn.hincrby("clients", client_id, 1)
-        llen = self.conn.llen("messages")
+        BUFSIZE = 20
 
-        if mid >= llen:
-            mid = llen - 1
+        llen = self.conn.llen("messages")
+        mid = self.conn.hincrby("clients", client_id, 1)
+
+        if mid < llen - BUFSIZE:
+            mid = llen - BUFSIZE
+            self.conn.hset("clients", client_id, mid)
+
+        elif mid >= llen:
+            mid = llen - BUFSIZE
             self.conn.hset("clients", client_id, mid)
 
         return mid
