@@ -22,16 +22,24 @@ def show_index():
     return bottle.template("main", page_name = "Main")
 
 
+def __setup_response():
+    bottle.response.content_type = "text/plain"
+    bottle.response.set_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+    bottle.response.set_header('Pragma', 'no-cache')
+    bottle.response.set_header('Expires', '0')
+
+
 @app.get('/messages/<client_id>/next')
 def get_next_message(client_id):
-    bottle.response.content_type = "text/plain"
+    __setup_response()
+
     next_mid = users.next_message_id(client_id)
     return message_store.filter_id(next_mid)
 
 
 @app.get('/messages/random')
 def get_random_message():
-    bottle.response.content_type = "text/plain"
+    __setup_response()
     return message_store.random()
 
 
@@ -43,7 +51,7 @@ def get_message(message_id):
 
 @app.get('/messages')
 def get_all_message():
-    bottle.response.content_type = "text/plain"
+    __setup_response()
     return bottle.template("message", messages=message_store.all())
 
 
