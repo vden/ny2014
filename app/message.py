@@ -43,13 +43,30 @@ class MessageStore(object):
         return self.backend.get_all()
 
 
-matcher = re.compile(ur'[a-zA-Z0-9-!\\\033\r\n$%^&*()_+\ |~=`{}\[\]:";\'<>?,.\/]', re.U|re.I|re.M)
+matcher = re.compile(ur'[a-zA-Z0-9-!\\\033\000\r\n$%^&*()_+\ |~=`{}\[\]:";\'<>?,.\/]', re.U|re.I|re.M)
 def validate_message(text):
-    if len(text) > 80:
+
+    # decline too long messages anyway
+    if len(text) > 1000:
         raise ValidationLengthException()
 
+    # don't waste cpu on invalid messages
     mo = matcher.sub('', text)
     if len(mo):
         raise ValidationContentException()
+
+    # remove Ctrl-C/Ctrl-Z
+    text = re.sub(r'(\\003|\\032)', '', text)
+
+    # strip control commands
+    stripped_text = re.sub(r"\\033\[.", '', text)
+    stripped_text = re.sub(r"[\r\n]", "", stripped_text)
+    # strip custom fonts
+    stripped_text = re.sub(r"[0-7](\\\d\d\d){8}", '', stripped_text)
+    # count custom symbols as one symbol
+    stripped_text = re.sub(r"\\000", "0", stripped_text)
+
+    if len(stripped_text) > 4*20:
+        raise ValidationLengthException()
 
     return text

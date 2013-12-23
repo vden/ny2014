@@ -2,6 +2,7 @@
 
 import os
 
+from urllib import unquote as urlunquote
 import bottle
 bottle.TEMPLATE_PATH = (os.path.join(os.path.dirname(__file__), "views"),)
 bottle.debug(False)
@@ -57,8 +58,29 @@ def get_all_message():
 
 @app.post("/messages")
 def post_message():
+    message = None
+
+    if not bottle.request.content_type.startswith('multipart/'):
+        # handle raw data (from `curl -d'' for instance)
+        maxlen = max(0, min(bottle.request.content_length, 10000))
+        body = bottle.request.body.read(maxlen)
+        for pair in body.split('&'):
+            if not pair: continue
+            nv = pair.split('=', 1)
+            if len(nv) != 2: continue
+
+            if nv[0] == "text":
+                message = nv[1]
+    else:
+        # handle proper web form request
+        message = bottle.request.forms.text
+
+    if message is None:
+        bottle.response.status = 400
+        return "Empty message\n"
+
     try:
-        text = validate_message(bottle.request.forms.text)
+        text = validate_message(message)
     except ValidationLengthException:
         bottle.response.status = 400
         return "Message must be shorter than 80 characters\n"
