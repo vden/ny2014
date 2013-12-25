@@ -25,3 +25,16 @@ sudo edit /etc/nginx/sites-enabled/ny2014-server.conf
 # (optional) add uwsgi startup file to supervisor
 # cp etc/ny2014.conf /etc/supervisor/conf.d/
 ```
+
+API
+
+```
+GET /messages/<client_id>/next/
+
+This will return last 20 messages in cycle. Here `client_id' is a random string, it's needed only to identify last shown message to this particular client.
+
+GET /messages/ — shows every message one by one.
+GET /message/<id>/ — shows message by number `id'.
+
+POST /messages/ [param `text'] — post message to feed.
+```
