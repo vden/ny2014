@@ -9,6 +9,7 @@
             padding: .4em 0;
           }
           ul {margin-top: 0}
+          .kudos a {color: #444}
         </style>
     </head>
     <body style="background-color: rgb(238, 238, 238)">
@@ -27,9 +28,10 @@
           
           <div style="margin-top: 3em; text-align:left;border-top:1px dashed #ccc">
             <pre>
-To send your message just use curl:
-<i>$ curl -d text='Your congratulation' http://geeksnewyear.tk/messages/</i>
-            </pre>
+<b>To send your message just use curl:
+<i>$ curl -d text='Your congratulation' http://geeksnewyear.tk/messages/</i></b>
+
+Full API reference is available in repository: <a href="https://github.com/vden/ny2014">https://github.com/vden/ny2014</a>.</pre>
           </div>
 
           <div style="margin-top: 2em; text-align:left;border-top:1px dashed #ccc">
@@ -48,8 +50,8 @@ How to make one of DIY displays and watch congratulations on your table:</pre>
           
         </div>
         <div style="text-align:left;position:absolute;bottom:0;width:100%;height:40px;">
-          <pre>
-&copy; 2013, 2014. Backend by <a style="color: #444" href="mailto:denis.voskvitsov@gmail.com">Denis Voskvitsov</a>, frontend by <a style="color: #444" href="mailto:levsha128@gmail.com">Alexey Shulga</a></pre>
+          <pre class="kudos">
+&copy; 2013, 2014. Backend by <a href="mailto:denis.voskvitsov@gmail.com">Denis Voskvitsov</a>, frontend by <a href="mailto:levsha128@gmail.com">Alexey Shulga</a> & <a href="mailto:vovan7773@gmail.com">Vladimir Vinogradov</a></pre>
         </div>
       </div>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
