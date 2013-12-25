@@ -2,7 +2,6 @@
 
 import os
 
-from urllib import unquote as urlunquote
 import bottle
 bottle.TEMPLATE_PATH = (os.path.join(os.path.dirname(__file__), "views"),)
 bottle.debug(False)
@@ -20,7 +19,7 @@ app = bottle.Bottle()
 
 @app.route('/')
 def show_index():
-    return bottle.template("main", page_name = "Main")
+    return bottle.template("base")
 
 
 def __setup_response():
