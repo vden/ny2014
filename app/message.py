@@ -64,8 +64,9 @@ def validate_message(text):
     # strip custom fonts
     stripped_text = re.sub(r"[0-7](\\\d\d\d){8}", '', stripped_text)
     # count custom symbols as one symbol
-    stripped_text = re.sub(r"\\000", "0", stripped_text)
+    stripped_text = re.sub(r"\\00[0-7]", "0", stripped_text)
 
+    print stripped_text, len(stripped_text)
     if len(stripped_text) > 4*20:
         raise ValidationLengthException()
 
