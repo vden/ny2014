@@ -6,7 +6,7 @@ var screenWidth = 20, screenHeight = 4;
 var cursorX, cursorY;
 var clientId = (new Date()).getTime();
 var DDRAM = [];
-var autoUpdate = 0, updateTimer;
+var autoUpdate = 1, updateTimer;
 $(document).ready(function () {
     if (isCanvasSupported()) {
         init();
